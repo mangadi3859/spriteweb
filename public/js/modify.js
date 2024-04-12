@@ -20,6 +20,7 @@ let slices = Array(parseInt(slicesElement.dataset.slices))
 socket.on("ping", console.log);
 socket.on("result", (base64) => {
     dataImg.setAttribute("src", base64);
+    inputX.value = slices[activeSlice][0];
     console.log("result");
 });
 
@@ -82,7 +83,6 @@ layerForm.addEventListener("submit", async (e) => {
 xInputForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     slices[activeSlice][0] = parseInt(inputX.value);
-    inputX.value = 0;
     socket.emit("update", { width: parseInt(widthMaxInput.value), height: parseInt(heightMaxInput.value) }, slices, fileid);
 });
 
@@ -106,6 +106,7 @@ function displaySlices() {
 function handleSliceEvent(index) {
     let slicesBtn = document.querySelectorAll("[data-slice-btn]");
     activeSlice = index;
+    inputX.value = slices[activeSlice][0];
 
     slicesBtn.forEach((e) => {
         if (e.dataset.sliceBtn == index) return e.classList.add("active");

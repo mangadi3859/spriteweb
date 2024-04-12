@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Sprite Modifier</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="public/css/global.css" />
+
+        <!-- JS -->
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+            integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <script src="public/js/global.js" defer></script>
+        <script src="public/js/home.js" defer></script>
+    </head>
+    <body>
+        <main id="main" class="grid place-items-center">
+            <form action="/process" enctype="multipart/form-data" method="POST" class="bg-white rounded-md border-blue-500 flex flex-col gap-4 max-w-[40rem] mx-auto w-full p-4 drop-shadow-xl">
+                <h2 class="text-center text-2xl font-bold text-blue-500">Select Sprite</h2>
+                <label for="i-file" class="preview">
+                    <div class="preview-overlay p-4 border-[rgb(0_0_0_/.1)] border-dashed border-2 rounded-md w-full hover:bg-blue-100 relative min-h-[10rem] cursor-pointer isolate grid place-items-center group/preview">
+                        <input class="opacity-0 absolute inset-0 cursor-pointer" type="file" name="sprite" id="i-file" accept="image/webp, image/png" data-file />
+                        <div class="absolute z-[-1] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">Upload Sprite</div>
+                        <div class="filler opacity-0 pointer-events-none bg-[rgb(0_0_0_/.5)] backdrop-blur-sm place-items-center hidden absolute inset-0 group-hover/preview:opacity-100 text-white" data-filler>
+                            <div class="p-2 border-white border rounded-sm">Upload Sprite</div>
+                        </div>
+                        <img class="hidden" data-img-preview />
+                    </div>
+                </label>
+
+                <button class="w-full rounded-md bg-blue-600 px-4 py-1 text-white hover:bg-blue-700 transition-all" type="submit">Save</button>
+            </form>
+        </main>
+    </body>
+</html>

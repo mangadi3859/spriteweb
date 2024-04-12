@@ -7,7 +7,7 @@ import { createServer } from "http";
 
 //Modules
 import convertWebp from "./server/webptopng";
-import processImage from "./server/processImg";
+import processImage, { Slice } from "./server/processImg";
 
 //Constants
 const app = express();
@@ -21,6 +21,7 @@ const PORT = 8080;
 const DEFAULT_SLICES = 13;
 const DEFAULT_WIDTH = 600;
 const DEFAULT_HEIGHT = 600;
+const cd = new Set<string>();
 
 //Initalization
 app.set("view engine", "ejs");
@@ -49,17 +50,35 @@ app.get("/modify/:id", async (req, res) => {
             await convertWebp(path.join(ROOT_TMP, req.params.id));
         }
 
-        let sprite = await processImage(path.join(ROOT_TMP, req.params.id + ".png"), new Array(DEFAULT_SLICES).fill(0));
+        let sprite = await processImage(
+            path.join(ROOT_TMP, req.params.id + ".png"),
+            Array(DEFAULT_SLICES)
+                .fill(0)
+                .map((e) => [0, 0])
+        );
         base64 = `data:image/png;base64,${sprite.toString("base64")}`;
     } else {
-        let sprite = await processImage(path.join(ROOT_TMP, req.params.id), new Array(DEFAULT_SLICES).fill(0));
+        let sprite = await processImage(path.join(ROOT_TMP, req.params.id), Array(DEFAULT_SLICES).fill(0));
         base64 = `data:image/png;base64,${sprite.toString("base64")}`;
     }
-    res.render("modify", { base64, slices: DEFAULT_SLICES, width: DEFAULT_WIDTH, height: DEFAULT_HEIGHT });
+    res.render("modify", { base64, slices: DEFAULT_SLICES, width: DEFAULT_WIDTH, height: DEFAULT_HEIGHT, tmp: req.params.id });
 });
 
+//Socket Stuff
 io.on("connection", (socket) => {
     socket.emit("ping", "Connected to websocket server");
+
+    socket.on("update", async (size: { height: number; width: number }, slices: Slice[], id: string) => {
+        if (cd.has(socket.id)) return;
+        cd.add(socket.id);
+        setTimeout(() => cd.delete(socket.id), 100);
+
+        let filepath = getTempPath(id);
+        let sprite = await processImage(filepath, slices, size);
+
+        let base64 = `data:image/png;base64,${sprite.toString("base64")}`;
+        socket.emit("result", base64);
+    });
 });
 
 //Run
@@ -68,4 +87,8 @@ server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 
 function clearTmp() {
     fs.readdirSync(ROOT_TMP).forEach((file) => !file.endsWith(".txt") && fs.unlinkSync(`${ROOT_TMP}/${file}`));
+}
+
+function getTempPath(name: string): string {
+    return fs.existsSync(path.join(ROOT_TMP, name + ".png")) ? path.join(ROOT_TMP, name + ".png") : path.join(ROOT_TMP, name);
 }

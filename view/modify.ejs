@@ -6,6 +6,12 @@
         <title>Sprite Modifier</title>
 
         <!-- CSS -->
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.10.7/sweetalert2.all.min.js"
+            integrity="sha512-sCRQAGZoT2SOdF+QT+pzQaJn2SP9K4t27Au967tsnf3gZNfHcKrkAKudpV2JBu16wsMouvG8C7iNV+dmMgDBgQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
         <link rel="stylesheet" href="../public/css/global.css" />
 
         <!-- JS -->
@@ -16,15 +22,15 @@
             referrerpolicy="no-referrer"
         ></script>
         <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
-            integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+            src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.10.7/sweetalert2.min.js"
+            integrity="sha512-csaTzpLFmF+Zl81hRtaZMsMhaeQDHO8E3gBkN3y3sCX9B1QSut68NxqcrxXH60BXPUQ/GB3LZzzIq9ZrxPAMTg=="
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
         ></script>
         <script src="../public/js/global.js" defer></script>
         <script src="../public/js/modify.js" defer></script>
     </head>
-    <body>
+    <body data-tmp="<%= locals.tmp %>">
         <main id="main" class="flex flex-col py-4 max-w-[70rem] mx-auto">
             <div class="flex gap-4 items-start">
                 <div class="img-container mx-auto bg-white p-4 rounded-md overflow-hidden mb-auto drop-shadow-xl">
@@ -32,24 +38,30 @@
                 </div>
                 <div class="controls flex flex-col gap-4">
                     <div class="layer-container grid grid-cols-3 gap-2 bg-white p-4 rounded-md drop-shadow-xl" data-slices="<%= locals.slices %>"></div>
-                    <div class="canvas-control flex gap-4 bg-white drop-shadow-xl p-4 rounded-md">
-                        <div class="form-group flex flex-col gap-2">
-                            <label for="i-wm">Width</label>
-                            <input class="input max-w-[7rem]" min="0" max="2000" type="number" id="i-wm" value="<%= locals.width %>" data-w-input />
+
+                    <form data-canvas-form class="canvas-control flex flex-col gap-4 bg-white drop-shadow-xl p-4 rounded-md">
+                        <div class="flex gap-4">
+                            <div class="form-group flex flex-col gap-2 w-1/2">
+                                <label for="i-wm">Width</label>
+                                <input required class="input" min="0" max="2000" type="number" id="i-wm" value="<%= locals.width %>" data-w-input />
+                            </div>
+                            <div class="form-group flex flex-col gap-2 w-1/2">
+                                <label for="i-hm">Height</label>
+                                <input required class="input" min="0" max="2000" type="number" id="i-hm" value="<%= locals.height %>" data-h-input />
+                            </div>
                         </div>
-                        <div class="form-group flex flex-col gap-2">
-                            <label for="i-hm">Height</label>
-                            <input class="input max-w-[7rem]" type="number" id="i-hm" value="<%= locals.height %>" data-h-input />
-                        </div>
-                    </div>
-                    <div class="slice-control flex flex-col gap-2 bg-white drop-shadow-xl p-4 rounded-md">
+                        <button class="px-2 py-1 text-white rounded-sm bg-blue-500 hover:bg-blue-600 transition-all">Save</button>
+                    </form>
+
+                    <form data-slice-form class="slice-control flex flex-col gap-2 bg-white drop-shadow-xl p-4 rounded-md">
                         <label for="i-slice">Slices</label>
-                        <input class="input" type="number" id="i-slice" value="<%= locals.slices %>" data-slice-input />
-                    </div>
-                    <div class="layer-control flex flex-col gap-2 bg-white drop-shadow-xl p-4 rounded-md">
+                        <input required class="input" type="number" id="i-slice" value="<%= locals.slices %>" data-slice-input />
+                    </form>
+
+                    <form data-layer-form class="layer-control flex flex-col gap-2 bg-white drop-shadow-xl p-4 rounded-md">
                         <label for="i-layer">Layer</label>
-                        <select class="input" id="i-layer" data-layer-input></select>
-                    </div>
+                        <input required type="number" min="1" value="1" class="input" id="i-layer" data-layer-input />
+                    </form>
                 </div>
             </div>
         </main>

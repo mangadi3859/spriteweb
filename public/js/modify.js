@@ -71,6 +71,7 @@ sliceForm.addEventListener("submit", async (e) => {
         slices = slices.slice(0, slice);
     }
 
+    displaySlices(slices.length);
     socket.emit("update", { width: parseInt(widthMaxInput.value), height: parseInt(heightMaxInput.value) }, slices, fileid);
 });
 
@@ -92,9 +93,9 @@ document.addEventListener("keydown", function (e) {
     socket.emit("update", { width: parseInt(widthMaxInput.value), height: parseInt(heightMaxInput.value) }, slices, fileid);
 });
 
-function displaySlices() {
+function displaySlices(x) {
     slicesElement.innerHTML = "";
-    let slice = parseInt(slicesElement.dataset.slices);
+    let slice = x || parseInt(slicesElement.dataset.slices);
     for (let i = 0; i < slice; i++) {
         let html = `<button class="${
             activeSlice == i ? "active" : ""

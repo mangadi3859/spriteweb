@@ -38,6 +38,10 @@
                 </div>
                 <div class="controls flex flex-col gap-4">
                     <div class="layer-container grid grid-cols-3 gap-2 bg-white p-4 rounded-md drop-shadow-xl" data-slices="<%= locals.slices %>"></div>
+                    <form data-x-form class="slice-control flex flex-col gap-2 bg-white drop-shadow-xl p-4 rounded-md">
+                        <label for="i-slice">X</label>
+                        <input required class="input" type="number" id="i-slice" value="0" data-slice-x />
+                    </form>
 
                     <form data-canvas-form class="canvas-control flex flex-col gap-4 bg-white drop-shadow-xl p-4 rounded-md">
                         <div class="flex gap-4">

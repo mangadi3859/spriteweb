@@ -5,8 +5,10 @@ const sliceForm = document.querySelector("[data-slice-form]");
 const layerForm = document.querySelector("[data-layer-form]");
 const widthMaxInput = document.querySelector("[data-w-input]");
 const heightMaxInput = document.querySelector("[data-h-input]");
+const inputX = document.querySelector("[data-slice-x");
 const sliceInput = document.querySelector("[data-slice-input]");
 const layerInput = document.querySelector("[data-layer-input]");
+const xInputForm = document.querySelector("[data-x-form]");
 const fileid = document.body.dataset.tmp;
 
 const socket = io("ws://localhost:8080");
@@ -74,6 +76,13 @@ sliceForm.addEventListener("submit", async (e) => {
 layerForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     slices[activeSlice][1] = parseInt(layerInput.value) - 1;
+    socket.emit("update", { width: parseInt(widthMaxInput.value), height: parseInt(heightMaxInput.value) }, slices, fileid);
+});
+
+xInputForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    slices[activeSlice][0] = parseInt(inputX.value);
+    inputX.value = 0;
     socket.emit("update", { width: parseInt(widthMaxInput.value), height: parseInt(heightMaxInput.value) }, slices, fileid);
 });
 

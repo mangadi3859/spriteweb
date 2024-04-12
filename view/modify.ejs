@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Sprite Modifier</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="../public/css/global.css" />
+
+        <!-- JS -->
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.js"
+            integrity="sha512-luMnTJZ7oEchNDZAtQhgjomP1eZefnl82ruTH/3Oj/Yu5qYtwL7+dVRccACS/Snp1lFXq188XFipHKYE75IaQQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+            integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <script src="../public/js/global.js" defer></script>
+        <script src="../public/js/modify.js" defer></script>
+    </head>
+    <body>
+        <main id="main" class="flex flex-col py-4 max-w-[70rem] mx-auto">
+            <div class="flex gap-4 items-start">
+                <div class="img-container mx-auto bg-white p-4 rounded-md overflow-hidden mb-auto drop-shadow-xl">
+                    <img data-img style="--bg-dark: #1f1f1f; --bg-light: #eee" class="bg-[var(--bg-dark)]" src="<%= locals.base64 %>" />
+                </div>
+                <div class="controls flex flex-col gap-4">
+                    <div class="layer-container grid grid-cols-3 gap-2 bg-white p-4 rounded-md drop-shadow-xl" data-slices="<%= locals.slices %>"></div>
+                    <div class="canvas-control flex gap-4 bg-white drop-shadow-xl p-4 rounded-md">
+                        <div class="form-group flex flex-col gap-2">
+                            <label for="i-wm">Width</label>
+                            <input class="input max-w-[7rem]" min="0" max="2000" type="number" id="i-wm" value="<%= locals.width %>" data-w-input />
+                        </div>
+                        <div class="form-group flex flex-col gap-2">
+                            <label for="i-hm">Height</label>
+                            <input class="input max-w-[7rem]" type="number" id="i-hm" value="<%= locals.height %>" data-h-input />
+                        </div>
+                    </div>
+                    <div class="slice-control flex flex-col gap-2 bg-white drop-shadow-xl p-4 rounded-md">
+                        <label for="i-slice">Slices</label>
+                        <input class="input" type="number" id="i-slice" value="<%= locals.slices %>" data-slice-input />
+                    </div>
+                    <div class="layer-control flex flex-col gap-2 bg-white drop-shadow-xl p-4 rounded-md">
+                        <label for="i-layer">Layer</label>
+                        <select class="input" id="i-layer" data-layer-input></select>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

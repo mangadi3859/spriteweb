@@ -18,4 +18,8 @@
     #main {
         @apply min-h-[100dvh];
     }
+
+    .input {
+        @apply px-4 py-2 rounded-sm outline-none border-[rgb(0_0_0_/.3)] border;
+    }
 }
